@@ -1,0 +1,8 @@
+*.pytest_cache/
+__pycache__/
+*__pycache__
+.vscode/
+.idea/
+.env
+*.pyc
+pyTestStudy/__pycache__/test_pyStudy_test.cpython-311-pytest-7.2.1.pyc
