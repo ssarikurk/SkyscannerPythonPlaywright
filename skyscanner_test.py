@@ -154,9 +154,6 @@ def test_skyscanner(browserSkyscanner):
             page.wait_for_timeout(3000)  # Arama sonuçlarını görmek için 5 saniye bekle
             checkAndCloseModal(page)
        
-            # page.goto("https://www.skyscanner.com.tr/sttc/px/captcha-v2/index.html?url=L3Rhc2ltYS2341Y2FrLWJpbGV0aS9lc2IvY2duLzIwMDUyMy8/YWR1bHRzdjI9MSZjYWJpbmNsYXNzPWVjb25vbXkmcmVmPWhvbWUmc3RvcHM9IW9uZVN0b3AlMkMhdHdvUGx1c1N0b3BzJmNoaWxkcmVudjI9JmluYm91bmRhbHRzZW5hYmxlZD1mYWxzZSZydG49MCZwcmVmZXJkaXJlY3RzPWZhbHNlJm91dGJvdW5kYWx0c2VuYWJsZWQ9ZmFsc2U=&uuid=3f2e18e0-f24b-11f0-b5dc-7556c283c4bc&vid=3eca5124-f24b-11f0-afb0-5d798bb21c45");
-            # https://www.skyscanner.com.tr/sttc/px/captcha-v2/index.html?url=L3Rhc2ltYS91Y2FrLWJpbGV0aS9lc2IvY2duLzIwMDUyMy8/YWR1bHRzdjI9MSZjYWJpbmNsYXNzPWVjb25vbXkmcmVmPWhvbWUmc3RvcHM9IW9uZVN0b3AlMkMhdHdvUGx1c1N0b3BzJmNoaWxkcmVudjI9JmluYm91bmRhbHRzZW5hYmxlZD1mYWxzZSZydG49MCZwcmVmZXJkaXJlY3RzPWZhbHNlJm91dGJvdW5kYWx0c2VuYWJsZWQ9ZmFsc2U=&uuid=3f2e18e0-f24b-11f0-b5dc-7556c283c4bc&vid=3eca5124-f24b-11f0-afb0-5d798bb21c45
-            # page.wait_for_timeout(5000)  # Captcha sayfasını görmek için 5 saniye bekle
             # get page url and print it
             current_url = page.url
             print(f"Current URL: {current_url}")
