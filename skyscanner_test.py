@@ -2,8 +2,6 @@
 import csv
 import time
 import random
-import asyncio
-import re
 import pytest
 import uuid
 import os
