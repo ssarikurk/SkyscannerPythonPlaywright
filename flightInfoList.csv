@@ -1,3 +1,5 @@
 from,to,date,provider
 ESB,FRA,23.05.2026,ucuzabilet
 ESB,DUS,23.05.2026,ucuzabilet
+DUS,ESB,29.05.2026,ucuzabilet
+FRA,ESB,29.05.2026,ucuzabilet
