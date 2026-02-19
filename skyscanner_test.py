@@ -171,6 +171,9 @@ def test_skyscanner(browserSkyscanner):
             # flightFirm = page.locator(f"img[class*='BpkImage_bpk-image__img'].nth({count}).locator('..')")
             # firmName = flightFirm.get_attribute("alt")
             # print(f"Uçuş Firması: {firmName}")
+            
+
+
 
 
             for i in range(ticket_count):               
@@ -194,6 +197,10 @@ def test_skyscanner(browserSkyscanner):
                 PricingItems = page.locator("div[class*='PricingItem_pricingItemContainer']")
                 pricing_count = PricingItems.count()    
                 print(f"  Bilet {i+1} için bulunan fiyat seçenekleri: {pricing_count}")
+
+
+
+
 
                 for j in range(pricing_count):
                     flightDict = {}
@@ -235,11 +242,6 @@ def test_skyscanner(browserSkyscanner):
                     flightList.append(flightDict)
                     print(f"    Fiyat seçeneği {j+1}: {price_text.strip()} - Sağlayıcı: {provider_text.strip()}")
                     print(f"    ----------------  Diğer satıcı  -------------------")
-
-
-
-
-
 
                 page.go_back()
                 page.wait_for_timeout(1000)  # Geri dönmeyi bekle
