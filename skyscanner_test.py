@@ -181,13 +181,11 @@ def test_skyscanner(browserSkyscanner):
                 ticketsUrl = page.url
 
                 ticket = ticket_container.nth(i)
-                ticket.locator("div[class*='TicketStubContent_ctaButtonContainer']").click()
-                page.wait_for_timeout(3000)  # Detayları görmek için 1 saniye bekle
+                # ticket.locator("div[class*='TicketStubContent_ctaButtonContainer']").click()
+                # page.wait_for_timeout(3000)  # Detayları görmek için 1 saniye bekle
                 checkAndCloseModal(page)
 
                 airline_locators = page.locator("div[class*='LegDetails_container'] img")
-                airline_locators_type = type(airline_locators)
-                print(f"Airline locators türü: {airline_locators_type}")
                 airline_count = airline_locators.count()
                 print(f"  Uçuş için bulunan havayolu sayısı: {airline_count}")
                 airline = airline_locators.get_attribute("alt")
@@ -202,49 +200,78 @@ def test_skyscanner(browserSkyscanner):
 
 
 
-                for j in range(pricing_count):
-                    flightDict = {}
-                    checkAndCloseModal(page)
-                    pricing = PricingItems.nth(j)# Fiyat bilgisini çek
-                    values = pricing.inner_text()
-                    typeOfValues = type(values)
-                    print(f"    Fiyat seçeneği {j+1} türü: {typeOfValues}")
-                    print(values)
-                    # convert values to list by line break
-                    # valueListmap = map(values_list.append(v) for v in values.split("\n"))
-                    # print(f"valueListmap: {valueListmap}")
-                    values_list = values.split("\n")
-                    print(f"    Fiyat seçeneği {j+1} liste: {values_list}")
-                    # first item is price, second item is provider
-                    price_text = values_list[9]
-                    price_text1 = values_list[10]
-                    # price_text2 = values_list[11]
-                    # price_text3 = values_list[12]
-                    provider_text = values_list[0]  
 
-                    # # print price tests
-                    print(price_text)
-                    print(price_text1)
-                    # print(price_text2)
-                    # print(price_text3)
+
+
+                flightDict = {
+                    "price": price_text.strip(),
+                    "provider": provider_text.strip(),
+                    "from": fromStr,
+                    "to": toStr,
+                    "departDate": row[2],
+                    "airline": airline,
+                    "url": ticketsUrl
+                }
+
+                flightList.append(flightDict)
+
+
+                print(f"\nUçuş Detayları: {flightDict}")
+                flightList.append(flightDict)
+                print(f"    Fiyat seçeneği {j+1}: {price_text.strip()} - Sağlayıcı: {provider_text.strip()}")
+                print(f"    ----------------  Diğer satıcı  -------------------")
+
+
+
+
+
+
+
+
+
+                # for j in range(pricing_count):
+                #     flightDict = {}
+                #     checkAndCloseModal(page)
+                #     pricing = PricingItems.nth(j)# Fiyat bilgisini çek
+                #     values = pricing.inner_text()
+                #     typeOfValues = type(values)
+                #     print(f"    Fiyat seçeneği {j+1} türü: {typeOfValues}")
+                #     print(values)
+                #     # convert values to list by line break
+                #     # valueListmap = map(values_list.append(v) for v in values.split("\n"))
+                #     # print(f"valueListmap: {valueListmap}")
+                #     values_list = values.split("\n")
+                #     print(f"    Fiyat seçeneği {j+1} liste: {values_list}")
+                #     # first item is price, second item is provider
+                #     price_text = values_list[9]
+                #     price_text1 = values_list[10]
+                #     # price_text2 = values_list[11]
+                #     # price_text3 = values_list[12]
+                #     provider_text = values_list[0]  
+
+                #     # # print price tests
+                #     print(price_text)
+                #     print(price_text1)
+                #     # print(price_text2)
+                #     # print(price_text3)
                    
-                    flightDict = {
-                        "price": price_text.strip(),
-                        "provider": provider_text.strip(),
-                        "from": fromStr,
-                        "to": toStr,
-                        "departDate": row[2],
-                        "airline": airline,
-                        "url": ticketsUrl
-                    }
+                #     flightDict = {
+                #         "price": price_text.strip(),
+                #         "provider": provider_text.strip(),
+                #         "from": fromStr,
+                #         "to": toStr,
+                #         "departDate": row[2],
+                #         "airline": airline,
+                #         "url": ticketsUrl
+                #     }
 
-                    print(f"\nUçuş Detayları: {flightDict}")
-                    flightList.append(flightDict)
-                    print(f"    Fiyat seçeneği {j+1}: {price_text.strip()} - Sağlayıcı: {provider_text.strip()}")
-                    print(f"    ----------------  Diğer satıcı  -------------------")
+                #     print(f"\nUçuş Detayları: {flightDict}")
+                #     flightList.append(flightDict)
+                #     print(f"    Fiyat seçeneği {j+1}: {price_text.strip()} - Sağlayıcı: {provider_text.strip()}")
+                #     print(f"    ----------------  Diğer satıcı  -------------------")
 
-                page.go_back()
-                page.wait_for_timeout(1000)  # Geri dönmeyi bekle
+                # page.go_back()
+                # page.wait_for_timeout(1000)  # Geri dönmeyi bekle
 
             
 
