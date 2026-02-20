@@ -175,7 +175,6 @@ def test_skyscanner(browserSkyscanner):
 
 
 
-
             for i in range(ticket_count):               
                 checkAndCloseModal(page)
                 ticketsUrl = page.url
@@ -185,6 +184,13 @@ def test_skyscanner(browserSkyscanner):
                 # page.wait_for_timeout(3000)  # Detayları görmek için 1 saniye bekle
                 checkAndCloseModal(page)
 
+                price_text = ticket.locator("div[class*='Price_mainPrice']").inner_text()
+                print(f"\nBilet {i+1} için fiyat: {price_text.strip()}")
+
+
+
+
+
                 airline_locators = page.locator("div[class*='LegDetails_container'] img")
                 airline_count = airline_locators.count()
                 print(f"  Uçuş için bulunan havayolu sayısı: {airline_count}")
@@ -192,9 +198,19 @@ def test_skyscanner(browserSkyscanner):
                 print(f"Havayolu: {airline}")
 
 
-                PricingItems = page.locator("div[class*='PricingItem_pricingItemContainer']")
-                pricing_count = PricingItems.count()    
-                print(f"  Bilet {i+1} için bulunan fiyat seçenekleri: {pricing_count}")
+
+
+
+
+
+                # airline = ticket.locator("div[class*='Price_priceInfoContainer'] span").inner_text()
+                # print(f"\nBilet {i+1} için fiyat: {price_text.strip()} - Sağlayıcı: {airline.strip()}")
+
+
+
+                # PricingItems = page.locator("div[class*='PricingItem_pricingItemContainer']")
+                # pricing_count = PricingItems.count()    
+                # print(f"  Bilet {i+1} için bulunan fiyat seçenekleri: {pricing_count}")
 
 
 
@@ -205,7 +221,7 @@ def test_skyscanner(browserSkyscanner):
 
                 flightDict = {
                     "price": price_text.strip(),
-                    "provider": provider_text.strip(),
+                    # "provider": provider_text.strip(),
                     "from": fromStr,
                     "to": toStr,
                     "departDate": row[2],
