@@ -194,7 +194,7 @@ def test_skyscanner(browserSkyscanner):
                 airline_locators = page.locator("div[class*='LegDetails_container'] img")
                 airline_count = airline_locators.count()
                 print(f"  Uçuş için bulunan havayolu sayısı: {airline_count}")
-                airline = airline_locators.get_attribute("alt")
+                airline = airline_locators.nth(i).get_attribute("alt")
                 print(f"Havayolu: {airline}")
 
 
@@ -232,10 +232,10 @@ def test_skyscanner(browserSkyscanner):
                 flightList.append(flightDict)
 
 
-                print(f"\nUçuş Detayları: {flightDict}")
-                flightList.append(flightDict)
-                print(f"    Fiyat seçeneği {j+1}: {price_text.strip()} - Sağlayıcı: {provider_text.strip()}")
-                print(f"    ----------------  Diğer satıcı  -------------------")
+                # print(f"\nUçuş Detayları: {flightDict}")
+                # flightList.append(flightDict)
+                # print(f"    Fiyat seçeneği {j+1}: {price_text.strip()}")
+                # print(f"    ----------------  Diğer satıcı  -------------------")
 
 
 
