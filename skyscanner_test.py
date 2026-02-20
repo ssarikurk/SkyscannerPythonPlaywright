@@ -192,8 +192,8 @@ def test_skyscanner(browserSkyscanner):
 
 
                 airline_locators = page.locator("div[class*='LegDetails_container'] img")
-                airline_count = airline_locators.count()
-                print(f"  Uçuş için bulunan havayolu sayısı: {airline_count}")
+                # airline_count = airline_locators.count()
+                # print(f"  Uçuş için bulunan havayolu sayısı: {airline_count}")
                 airline = airline_locators.nth(i).get_attribute("alt")
                 print(f"Havayolu: {airline}")
 
