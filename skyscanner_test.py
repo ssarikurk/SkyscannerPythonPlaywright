@@ -201,24 +201,6 @@ def test_skyscanner(browserSkyscanner):
 
 
 
-
-
-                # airline = ticket.locator("div[class*='Price_priceInfoContainer'] span").inner_text()
-                # print(f"\nBilet {i+1} için fiyat: {price_text.strip()} - Sağlayıcı: {airline.strip()}")
-
-
-
-                # PricingItems = page.locator("div[class*='PricingItem_pricingItemContainer']")
-                # pricing_count = PricingItems.count()    
-                # print(f"  Bilet {i+1} için bulunan fiyat seçenekleri: {pricing_count}")
-
-
-
-
-
-
-
-
                 flightDict = {
                     "price": price_text.strip(),
                     "provider": "Skyscanner",
@@ -230,18 +212,6 @@ def test_skyscanner(browserSkyscanner):
                 }
 
                 flightList.append(flightDict)
-
-
-                # print(f"\nUçuş Detayları: {flightDict}")
-                # flightList.append(flightDict)
-                # print(f"    Fiyat seçeneği {j+1}: {price_text.strip()}")
-                # print(f"    ----------------  Diğer satıcı  -------------------")
-
-
-
-
-
-
 
 
 
