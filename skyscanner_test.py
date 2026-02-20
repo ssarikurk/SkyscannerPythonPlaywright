@@ -221,7 +221,7 @@ def test_skyscanner(browserSkyscanner):
 
                 flightDict = {
                     "price": price_text.strip(),
-                    # "provider": provider_text.strip(),
+                    "provider": "Skyscanner",
                     "from": fromStr,
                     "to": toStr,
                     "departDate": row[2],
