@@ -263,7 +263,7 @@ def test_skyscanner(browserSkyscanner):
 
             print(f"----------------------------------------------------------------------")
 
-            # convert flightList to html  to acttch to a mail
+    # convert flightList to html  to acttch to a mail
     with open('flightDetails.html', 'w', encoding='utf-8') as f:
         f.write('<html><head><meta charset="UTF-8"></head><body>')
         f.write('<h1>Uçuş Detayları</h1>')
