@@ -600,3 +600,39 @@ def read_last_sent_flight_email(user_email, app_password):
     except Exception as e:
         print(f"Hata oluştu: {e}")
         return None
+    
+
+def parse_flight_table(html_content):
+    """Uçuş tablosundaki her satırı yapılandırılmış veriye dönüştürür"""
+    soup = BeautifulSoup(html_content, 'html.parser')
+    flights = []
+    
+    table = soup.find('table')
+    if not table:
+        return []
+
+    # Başlıkları al (From, To, Depart Date, Airline, Price, Provider, URL)
+    headers = [th.get_text(strip=True).lower() for th in table.find_all('th')]
+    
+    # Satırları tara (İlk satır başlık olduğu için geçilebilir ama tr/td yapısı daha güvenli)
+    rows = table.find_all('tr')
+    for row in rows:
+        cols = row.find_all('td')
+        if not cols:
+            continue
+            
+        # Sütun verilerini eşleştir
+        flight_info = {}
+        for i, col in enumerate(cols):
+            header_name = headers[i] if i < len(headers) else f"column_{i}"
+            
+            if header_name == 'url':
+                # Linkin kendisini (href) al
+                link_tag = col.find('a', href=True)
+                flight_info['url'] = link_tag['href'] if link_tag else None
+            else:
+                flight_info[header_name] = col.get_text(strip=True)
+        
+        flights.append(flight_info)
+        
+    return flights    
