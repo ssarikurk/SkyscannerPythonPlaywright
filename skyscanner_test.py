@@ -151,7 +151,7 @@ def test_skyscanner(browserSkyscanner):
             url = f"https://www.skyscanner.com.tr/tasima/ucak-bileti/{fromStr}/{toStr}/{departDate}/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops"
             print(f"Gidilen URL: {url}")
             #https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/fran/260320/config/11389-2603201350--32570-0-11616-2603201530?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops
-            # https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260209/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops
+            #https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260209/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops
             page.goto(url)
             page.wait_for_timeout(3000)  # Arama sonuçlarını görmek için 5 saniye bekle
             checkAndCloseModal(page)
