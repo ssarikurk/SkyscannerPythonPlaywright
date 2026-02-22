@@ -489,6 +489,24 @@ def passCaptcha(url, current_url, page):
                 checkAndCloseModal(page)     
 
 
+def calculate_diff(new_str, old_str):
+    if not old_str or old_str == "N/A":
+        return "İlk Kayıt", 0, "white"
+    
+    new_v = parse_price(new_str)
+    old_v = parse_price(old_str)
+    
+    diff = new_v - old_v
+    percent = (diff / old_v) * 100 if old_v != 0 else 0
+    
+    if diff < 0:
+        return f"{diff:,.0f} TL (%{percent:.1f})".replace(",", "."), diff, "#d4edda" # Yeşil
+    elif diff > 0:
+        return f"+{diff:,.0f} TL (+%{percent:.1f})".replace(",", "."), diff, "#f8d7da" # Kırmızı
+    else:
+        return "Değişim Yok", 0, "white"
+
+
 def read_last_sent_flight_email(user_email, app_password):
     try:
         # Gmail için 'Sent Mail' klasörüne bağlanıyoruz
