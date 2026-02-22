@@ -123,7 +123,7 @@ def checkAndCloseModal(page):
     except:
         pass
 
-def test_skyscanner(browserSkyscanner):
+def test_skyscanner2(browserSkyscanner):
     page = browserSkyscanner
     url = "https://www.skyscanner.com"
     page.goto(url)
