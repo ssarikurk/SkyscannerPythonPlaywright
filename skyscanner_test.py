@@ -284,7 +284,6 @@ def parse_price(price_str):
     except:
         return 0.0
 
-
 def send_html_email(message, subject, to_address, from_address):
     # Gmail SMTP ayarları
     host = "smtp.gmail.com"
