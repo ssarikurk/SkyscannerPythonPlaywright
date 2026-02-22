@@ -841,7 +841,7 @@ def test_skyscanner(browserSkyscanner):
     
     send_html_email(
         message=html_content,
-        subject=f"Flight Details Report - {datetime.date.today().strftime('%d.%m.%Y')}",
+        subject="Flight Details Report",
         to_address=os.getenv("TO_MAIL"),
         from_address=os.getenv("FROM_MAIL")
     )
