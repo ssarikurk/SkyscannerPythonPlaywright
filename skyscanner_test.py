@@ -277,6 +277,12 @@ def test_skyscanner(browserSkyscanner):
         from_address=os.getenv("FROM_MAIL")
     )
 
+def parse_price(price_str):
+    try:
+        # "8.480 TL" -> 8480
+        return float(price_str.replace('TL', '').replace('₺', '').replace('.', '').replace(',', '.').strip())
+    except:
+        return 0.0
 
 
 def send_html_email(message, subject, to_address, from_address):
