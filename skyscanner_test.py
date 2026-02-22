@@ -206,8 +206,6 @@ def test_skyscanner(browserSkyscanner):
 
                 flightList.append(flightDict)
 
-
-
                 # for j in range(pricing_count):
                 #     flightDict = {}
                 #     checkAndCloseModal(page)
