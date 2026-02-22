@@ -7,6 +7,8 @@ import pytest
 import uuid
 import os
 import shutil
+import imaplib
+imaplib.IMAP4.utf8_mode = True 
 from playwright.sync_api import Playwright, sync_playwright
 import smtplib
 from email.message import EmailMessage
@@ -123,6 +125,7 @@ def checkAndCloseModal(page):
     except:
         pass
 
+@pytest.mark.skip(reason="Bu test, diğer testlerdeki uçuş arama ve veri çekme işlemlerini doğrulamak için kullanılır. Doğrudan çalıştırılması önerilmez.")  
 def test_skyscanner2(browserSkyscanner):
     page = browserSkyscanner
     url = "https://www.skyscanner.com"
@@ -272,7 +275,7 @@ def test_skyscanner2(browserSkyscanner):
     
     send_html_email(
         message=open('flightDetails.html', 'r', encoding='utf-8').read(),
-        subject="Uçuş Detayları Raporu",
+        subject="Flight Details Report",
         to_address=os.getenv("TO_MAIL"),
         from_address=os.getenv("FROM_MAIL")
     )
@@ -488,7 +491,6 @@ def passCaptcha(url, current_url, page):
                 page.wait_for_timeout(5000) 
                 checkAndCloseModal(page)     
 
-
 def calculate_diff(new_str, old_str):
     if not old_str or old_str == "N/A":
         return "İlk Kayıt", 0, "white"
@@ -507,11 +509,44 @@ def calculate_diff(new_str, old_str):
         return "Değişim Yok", 0, "white"
 
 
-def read_last_sent_flight_email(user_email, app_password):
+
+def read_sent_emails(user_email, app_password, subject_query=''):
+    try:
+        with MailBox('imap.gmail.com').login(user_email, app_password, 'INBOX') as mailbox:
+            today = datetime.date.today()
+            email_list = []
+            
+            # Bugün gelen mailleri çek
+            criteria = AND(subject=subject_query, from_='sahibinden.com', date=today)
+            
+            for msg in mailbox.fetch(criteria, charset='utf-8'):
+                # HTML içeriğini işle
+                # soup = BeautifulSoup(msg.html, 'html.parser')
+                
+                # Linkleri fiyatlarıyla birlikte çıkart
+                links_with_prices = GmailUtils.extract_links_with_prices(msg.html)
+                
+                email_list.append({
+                    "subject": msg.subject,
+                    "date": msg.date,
+                    "links_with_prices": links_with_prices
+                })
+            return email_list
+    except Exception as e:
+        print(f"Hata oluştu: {e}")
+        return []
+  
+
+def read_last_sent_flight_email2(user_email, app_password):
     try:
         # Gmail için 'Sent Mail' klasörüne bağlanıyoruz
-        with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Sent Mail') as mailbox:
-            
+        # with MailBox('imap.gmail.com').login(user_email, app_password, 'sent') as mailbox:
+        # with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Sent Mail') as mailbox:
+        # with MailBox('imap.gmail.com').login(user_email, app_password) as mailbox:
+        #     print(mailbox.folder.list())
+        with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Tüm Postalar') as mailbox:
+        # with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Gönderilmiş Postalar') as mailbox:    
+        # with MailBox('imap.gmail.com').login(user_email, app_password, "[Gmail]/G\xf6nderilmi\u015f Postalar") as mailbox:    
             # Filtreleme Kriterleri:
             # 1. to='gsarikurk@gmail.com' -> Sadece bu adrese gönderilenler
             # 2. subject='Uçuş Detayları' -> Konusu tam olarak bu olan (veya içeren)
@@ -542,11 +577,99 @@ def read_last_sent_flight_email(user_email, app_password):
                 print("Kriterlere uygun gönderilmiş mail bulunamadı.")
                 
             return email_data
+        print(email_data)
 
     except Exception as e:
         print(f"Hata oluştu: {e}")
         return None
-    
+
+
+import imaplib
+import email
+from email.header import decode_header
+from datetime import datetime
+
+def read_last_sent_flight_email(user_email, app_password):
+    try:
+        print("\n--- Mail Okuma İşlemi Başladı ---")
+        mail = imaplib.IMAP4_SSL('imap.gmail.com')
+        mail.login(user_email, app_password)
+        
+        # UTF-7 encoded klasör adı (Türkçe Gmail için standarttır)
+        sent_folder = '"[Gmail]/G&APY-nderilmi&AV8- Postalar"'
+        status, _ = mail.select(sent_folder)
+        
+        if status != 'OK':
+            print(f"HATA: Klasör seçilemedi ({sent_folder}).")
+            return None
+        
+        print(f"Klasör seçildi: {sent_folder}")
+
+        # Arama kriterini biraz esnetiyoruz: SUBJECT "Uçuş" veya "Flight"
+        # Eğer senin başlığın "Uçuş Detayları Raporu" ise SUBJECT "Uçuş" yeterlidir.
+        search_criteria = '(TO "gsarikurk@gmail.com" SUBJECT "Flight Details Report")' # İngilizce karakterle denemek daha güvenlidir
+        # Alternatif: Eğer başlığın tam halinden eminsen:
+        # search_criteria = '(TO "gsarikurk@gmail.com" SUBJECT "Ucus Detaylari Raporu")'
+
+        status, messages = mail.search('UTF-8', search_criteria)
+        
+        if status != 'OK' or not messages[0]:
+            print("BİLGİ: Kriterlere uygun mail bulunamadı. (Arama kriterlerini kontrol edin)")
+            mail.logout()
+            return None
+        
+        mail_ids = messages[0].split()
+        print(f"Bulunan toplam mail sayısı: {len(mail_ids)}")
+        
+        latest_id = mail_ids[-1]
+        print(f"En son mail çekiliyor (ID: {latest_id})...")
+        
+        status, msg_data = mail.fetch(latest_id, '(RFC822)')
+        raw_email = msg_data[0][1]
+        msg = email.message_from_bytes(raw_email)
+        
+        # HTML içeriği al
+        html_content = None
+        if msg.is_multipart():
+            for part in msg.walk():
+                if part.get_content_type() == 'text/html':
+                    html_content = part.get_payload(decode=True).decode('utf-8', errors='ignore')
+                    break
+        else:
+            html_content = msg.get_payload(decode=True).decode('utf-8', errors='ignore')
+        
+        if not html_content:
+            print("HATA: Mail içeriğinde HTML bulunamadı.")
+            return None
+
+        # Tabloyu ayrıştır
+        flight_data = parse_flight_table(html_content)
+        
+        print("\n--- ÇEKİLEN DATA  ---")
+        print(f"Konu: {msg.get('Subject')}")
+        print(f"Tarih: {msg.get('Date')}")
+        print(f"Bulunan Uçuş Sayısı: {len(flight_data)}")
+        
+        # İlk 2 uçuşu örnek olarak terminale bas
+        # for i, f in enumerate(flight_data[:2]):
+        for i, f in enumerate(flight_data):
+            print(f"Kayıt {i+1}: {f.get('from')} -> {f.get('to')} | Fiyat: {f.get('price')}")
+        print("---------------------------\n")
+        
+        email_data = {
+            "subject": msg.get('Subject'),
+            "date": msg.get('Date'),
+            "to": msg.get('To'),
+            "flights": flight_data
+        }
+        
+        mail.logout()
+        return email_data
+
+    except Exception as e:
+        print(f"Hata oluştu: {e}")
+        return None
+
 
 def parse_flight_table(html_content):
     """Uçuş tablosundaki her satırı yapılandırılmış veriye dönüştürür"""
@@ -581,4 +704,145 @@ def parse_flight_table(html_content):
         
         flights.append(flight_info)
         
-    return flights    
+    return flights 
+
+def test_skyscanner(browserSkyscanner):
+    # 1. ESKİ MAİLİ OKU VE HAFIZAYA AL
+    print("\n--- Eski fiyatlar kontrol ediliyor... ---")
+    old_flights_dict = {}
+    try:
+        old_email_data = read_last_sent_flight_email(os.getenv("FROM_MAIL"), os.getenv("APP_PASSWORD"))
+        if old_email_data and 'flights' in old_email_data:
+            for f in old_email_data['flights']:
+                # Karşılaştırma anahtarı: rota-tarih-havayolu
+                key = f"{f.get('from','')}-{f.get('to','')}-{f.get('depart date','')}-{f.get('airline','')}".lower().strip()
+                old_flights_dict[key] = f.get('price', 'N/A')
+            print(f"Sistemde {len(old_flights_dict)} adet eski uçuş verisi bulundu.")
+    except Exception as e:
+        print(f"Eski mailler okunurken hata alındı (İlk çalışma olabilir): {e}")
+
+    # 2. TARAYICI VE SAYFA HAZIRLIĞI
+    page = browserSkyscanner
+    flightList = []
+    
+    # CSV dosyasını oku
+    with open('flightInfoList.csv', mode='r', encoding='utf-8') as file:
+        csvreader = csv.reader(file)
+        header = next(csvreader) # Başlığı atla
+        
+        for row in csvreader:
+            fromStr = row[0].lower().strip()
+            toStr = row[1].lower().strip()
+            departDate = convertDateFormat(row[2]) # Tarih formatlayıcı fonksiyonun
+
+            print(f"\n>>> {fromStr.upper()} - {toStr.upper()} için {departDate} aranıyor...")
+
+            url = f"https://www.skyscanner.com.tr/tasima/ucak-bileti/{fromStr}/{toStr}/{departDate}/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops"
+            
+            page.goto(url)
+            page.wait_for_timeout(4000) # Sayfanın yüklenmesi için bekleme
+            
+            checkAndCloseModal(page)
+            passCaptcha(url, page.url, page)
+
+            # Bilet konteynerlarını bul
+            ticket_container = page.locator("div[class*='EcoTicketWrapper_ecoContainer']")
+            ticket_count = ticket_container.count()
+            print(f"Bulunan bilet sayısı: {ticket_count}")
+
+            for i in range(min(ticket_count, 5)): # Her arama için en iyi 5 sonucu alalım
+                try:
+                    ticket = ticket_container.nth(i)
+                    price_text = ticket.locator("div[class*='Price_mainPrice']").inner_text().strip()
+                    
+                    airline_locators = page.locator("div[class*='LegDetails_container'] img")
+                    airline = airline_locators.nth(i).get_attribute("alt") if airline_locators.nth(i).count() > 0 else "Bilinmiyor"
+
+                    # Fiyat Karşılaştırma Mantığı
+                    compare_key = f"{fromStr}-{toStr}-{row[2]}-{airline}".lower().strip()
+                    old_price_str = old_flights_dict.get(compare_key, "N/A")
+                    
+                    diff_text, diff_val, status_color = calculate_diff(price_text, old_price_str)
+
+                    flightDict = {
+                        "from": fromStr,
+                        "to": toStr,
+                        "departDate": row[2],
+                        "airline": airline,
+                        "price": price_text,
+                        "old_price": old_price_str,
+                        "diff": diff_text,
+                        "color": status_color,
+                        "provider": "Skyscanner",
+                        "url": page.url
+                    }
+                    flightList.append(flightDict)
+                    print(f"  [{airline}]: {price_text} (Önceki: {old_price_str}) -> {diff_text}")
+                except Exception as e:
+                    print(f"Bilet ayıklanırken hata: {e}")
+                    continue
+
+    # 3. HTML RAPORU OLUŞTURMA
+    print(f"\nToplam {len(flightList)} uçuş işlendi. Rapor hazırlanıyor...")
+    
+    html_content = f"""
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }}
+            table {{ border-collapse: collapse; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }}
+            th, td {{ border: 1px solid #ddd; padding: 12px; text-align: left; }}
+            th {{ background-color: #0071c2; color: white; }}
+            tr:hover {{ background-color: #f5f5f5; }}
+            .price-tag {{ font-weight: bold; font-size: 1.1em; }}
+            .link-btn {{ background: #0071c2; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.9em; }}
+        </style>
+    </head>
+    <body>
+        <h1>Flight Details Report</h1>
+        <p>Oluşturulma Tarihi: {datetime.now().strftime('%d.%m.%Y %H:%M')}</p>
+        <p><span style="background-color: #d4edda; padding: 2px 5px;">Yeşil: Fiyat Düştü</span> | 
+           <span style="background-color: #f8d7da; padding: 2px 5px;">Kırmızı: Fiyat Arttı</span></p>
+        <table>
+            <tr>
+                <th>Rota</th>
+                <th>Tarih</th>
+                <th>Havayolu</th>
+                <th>Eski Fiyat</th>
+                <th>Yeni Fiyat</th>
+                <th>Değişim</th>
+                <th>İşlem</th>
+            </tr>
+    """
+
+    for flight in flightList:
+        html_content += f"""
+            <tr style="background-color: {flight['color']};">
+                <td>{flight['from'].upper()} ✈ {flight['to'].upper()}</td>
+                <td>{flight['departDate']}</td>
+                <td>{flight['airline']}</td>
+                <td>{flight['old_price']}</td>
+                <td class="price-tag">{flight['price']}</td>
+                <td>{flight['diff']}</td>
+                <td><a class="link-btn" href="{flight['url']}">Bilete Git</a></td>
+            </tr>
+        """
+
+    html_content += """
+        </table>
+    </body>
+    </html>
+    """
+
+    # HTML dosyasını kaydet ve gönder
+    with open('flightDetails.html', 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    send_html_email(
+        message=html_content,
+        subject=f"Flight Details Report - {datetime.date.today().strftime('%d.%m.%Y')}",
+        to_address=os.getenv("TO_MAIL"),
+        from_address=os.getenv("FROM_MAIL")
+    )
+    print("\nRapor başarıyla gönderildi.")
