@@ -15,6 +15,9 @@ from email.message import EmailMessage
 from dotenv import load_dotenv    
 from imap_tools import MailBox, AND
 from bs4 import BeautifulSoup
+import email
+from email.header import decode_header
+from datetime import datetime
 # import re
 
 load_dotenv()  # .env dosyasını yükle
@@ -510,85 +513,6 @@ def calculate_diff(new_str, old_str):
 
 
 
-def read_sent_emails(user_email, app_password, subject_query=''):
-    try:
-        with MailBox('imap.gmail.com').login(user_email, app_password, 'INBOX') as mailbox:
-            today = datetime.date.today()
-            email_list = []
-            
-            # Bugün gelen mailleri çek
-            criteria = AND(subject=subject_query, from_='sahibinden.com', date=today)
-            
-            for msg in mailbox.fetch(criteria, charset='utf-8'):
-                # HTML içeriğini işle
-                # soup = BeautifulSoup(msg.html, 'html.parser')
-                
-                # Linkleri fiyatlarıyla birlikte çıkart
-                links_with_prices = GmailUtils.extract_links_with_prices(msg.html)
-                
-                email_list.append({
-                    "subject": msg.subject,
-                    "date": msg.date,
-                    "links_with_prices": links_with_prices
-                })
-            return email_list
-    except Exception as e:
-        print(f"Hata oluştu: {e}")
-        return []
-  
-
-def read_last_sent_flight_email2(user_email, app_password):
-    try:
-        # Gmail için 'Sent Mail' klasörüne bağlanıyoruz
-        # with MailBox('imap.gmail.com').login(user_email, app_password, 'sent') as mailbox:
-        # with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Sent Mail') as mailbox:
-        # with MailBox('imap.gmail.com').login(user_email, app_password) as mailbox:
-        #     print(mailbox.folder.list())
-        with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Tüm Postalar') as mailbox:
-        # with MailBox('imap.gmail.com').login(user_email, app_password, '[Gmail]/Gönderilmiş Postalar') as mailbox:    
-        # with MailBox('imap.gmail.com').login(user_email, app_password, "[Gmail]/G\xf6nderilmi\u015f Postalar") as mailbox:    
-            # Filtreleme Kriterleri:
-            # 1. to='gsarikurk@gmail.com' -> Sadece bu adrese gönderilenler
-            # 2. subject='Uçuş Detayları' -> Konusu tam olarak bu olan (veya içeren)
-            criteria = AND(
-                to='gsarikurk@gmail.com', 
-                subject='Uçuş Detayları'
-            )
-            
-            # reverse=True: En yeni mailden eskiye doğru sırala
-            # limit=1: Sadece en sonuncuyu al
-            messages = mailbox.fetch(criteria, limit=1, reverse=True)
-            
-            email_data = None
-            for msg in messages:
-                # Daha önce yazdığımız tabloyu parçalayan fonksiyon
-                flight_data = parse_flight_table(msg.html)
-                
-                email_data = {
-                    "subject": msg.subject,
-                    "date": msg.date,
-                    "to": msg.to,
-                    "flights": flight_data
-                }
-                # İlk (ve tek) maili alınca döngüden çıkabiliriz
-                break 
-            
-            if not email_data:
-                print("Kriterlere uygun gönderilmiş mail bulunamadı.")
-                
-            return email_data
-        print(email_data)
-
-    except Exception as e:
-        print(f"Hata oluştu: {e}")
-        return None
-
-
-import imaplib
-import email
-from email.header import decode_header
-from datetime import datetime
-
 def read_last_sent_flight_email(user_email, app_password):
     try:
         print("\n--- Mail Okuma İşlemi Başladı ---")
@@ -672,6 +596,73 @@ def read_last_sent_flight_email(user_email, app_password):
 
 
 def parse_flight_table(html_content):
+    """Değişen HTML yapısına göre tabloyu hatasız okur."""
+    if not html_content:
+        return []
+        
+    soup = BeautifulSoup(html_content, 'html.parser')
+    flights = []
+    
+    # Tabloyu bul
+    table = soup.find('table')
+    if not table:
+        print("HATA: HTML içinde tablo bulunamadı.")
+        return []
+
+    # Tüm satırları al
+    rows = table.find_all('tr')
+    
+    for row in rows:
+        # th içeren başlık satırını atla
+        if row.find('th'):
+            continue
+            
+        cols = row.find_all('td')
+        # Boş satırları veya eksik sütunları atla
+        if len(cols) < 5:
+            continue
+            
+        try:
+            # 1. Rota (Örn: DUS ✈ ESB)
+            # Rota içindeki img veya emoji karmaşasını temizleyip sadece metni alıyoruz
+            route_text = cols[0].get_text(separator=" ", strip=True)
+            # "DUS ✈ ESB" -> ["DUS", "ESB"]
+            route_parts = route_text.replace('✈', '').split()
+            from_airport = route_parts[0] if len(route_parts) > 0 else "Bilinmiyor"
+            to_airport = route_parts[-1] if len(route_parts) > 1 else "Bilinmiyor"
+
+            # 2. Tarih
+            depart_date = cols[1].get_text(strip=True)
+
+            # 3. Havayolu
+            airline = cols[2].get_text(strip=True)
+
+            # 4. Eski Fiyat
+            old_price = cols[3].get_text(strip=True)
+
+            # 5. Yeni Fiyat
+            new_price = cols[4].get_text(strip=True)
+
+            # Veriyi sözlük yapısına ekle
+            flight_info = {
+                "from": from_airport.lower(),
+                "to": to_airport.lower(),
+                "depart date": depart_date,
+                "airline": airline,
+                "price": new_price, # Karşılaştırma için 'price' anahtarı yeni fiyattır
+                "old_price": old_price
+            }
+            flights.append(flight_info)
+            
+        except Exception as e:
+            print(f"Satır işlenirken hata oluştu: {e}")
+            continue
+            
+    return flights
+
+
+
+def parse_flight_table2(html_content):
     """Uçuş tablosundaki her satırı yapılandırılmış veriye dönüştürür"""
     soup = BeautifulSoup(html_content, 'html.parser')
     flights = []
@@ -796,14 +787,25 @@ def test_skyscanner(browserSkyscanner):
             th {{ background-color: #0071c2; color: white; }}
             tr:hover {{ background-color: #f5f5f5; }}
             .price-tag {{ font-weight: bold; font-size: 1.1em; }}
-            .link-btn {{ background: #0071c2; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.9em; }}
+            
+            /* BUTON DÜZENLEMESİ */
+            .link-btn {{ 
+                background-color: #0071c2 !important; 
+                color: #ffffff !important; /* Yazıyı zorla beyaz yap */
+                padding: 8px 15px; 
+                text-decoration: none; 
+                border-radius: 5px; 
+                font-size: 0.9em; 
+                font-weight: bold;
+                display: inline-block; /* Butonun formunu korur */
+            }}
         </style>
     </head>
     <body>
         <h1>Flight Details Report</h1>
         <p>Oluşturulma Tarihi: {datetime.now().strftime('%d.%m.%Y %H:%M')}</p>
-        <p><span style="background-color: #d4edda; padding: 2px 5px;">Yeşil: Fiyat Düştü</span> | 
-           <span style="background-color: #f8d7da; padding: 2px 5px;">Kırmızı: Fiyat Arttı</span></p>
+        <p><span style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 3px 8px; border-radius: 3px;">Yeşil: Fiyat Düştü</span> | 
+           <span style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 3px 8px; border-radius: 3px;">Kırmızı: Fiyat Arttı</span></p>
         <table>
             <tr>
                 <th>Rota</th>
@@ -817,6 +819,7 @@ def test_skyscanner(browserSkyscanner):
     """
 
     for flight in flightList:
+        # Satır içindeki link rengini de garantiye almak için inline style ekleyelim
         html_content += f"""
             <tr style="background-color: {flight['color']};">
                 <td>{flight['from'].upper()} ✈ {flight['to'].upper()}</td>
@@ -825,15 +828,9 @@ def test_skyscanner(browserSkyscanner):
                 <td>{flight['old_price']}</td>
                 <td class="price-tag">{flight['price']}</td>
                 <td>{flight['diff']}</td>
-                <td><a class="link-btn" href="{flight['url']}">Bilete Git</a></td>
+                <td><a href="{flight['url']}" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
             </tr>
         """
-
-    html_content += """
-        </table>
-    </body>
-    </html>
-    """
 
     # HTML dosyasını kaydet ve gönder
     with open('flightDetails.html', 'w', encoding='utf-8') as f:
