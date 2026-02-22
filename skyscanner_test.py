@@ -484,7 +484,6 @@ def passCaptcha(url, current_url, page):
                 checkAndCloseModal(page)     
 
 
-
 def read_last_sent_flight_email(user_email, app_password):
     try:
         # Gmail için 'Sent Mail' klasörüne bağlanıyoruz
