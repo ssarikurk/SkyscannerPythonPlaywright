@@ -6,4 +6,4 @@ beautifulsoup4==4.14.3
 lxml>=5.2.1
 python-dotenv==1.2.1
 playwright-stealth==1.0.6
-imap_tools==15.0.0
+imap-tools==15.0.0
