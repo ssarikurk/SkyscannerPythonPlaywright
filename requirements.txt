@@ -3,6 +3,7 @@ pytest==7.2.1
 pytest-playwright==0.7.2
 requests==2.32.5
 beautifulsoup4==4.14.3
-lxml==4.9.2
+lxml>=5.2.1
 python-dotenv==1.2.1
 playwright-stealth==1.0.6
+imap_tools==15.0.0
