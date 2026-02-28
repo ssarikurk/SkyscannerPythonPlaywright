@@ -736,7 +736,8 @@ def test_skyscanner(browserSkyscanner):
             ticket_count = ticket_container.count()
             print(f"Bulunan bilet sayısı: {ticket_count}")
 
-            for i in range(min(ticket_count, 5)): # Her arama için en iyi 5 sonucu alalım
+            # check all results and compare with old_flights_dict to determine price changes, then build flightList with the new data and differences
+            for i in range(ticket_count):
                 try:
                     ticket = ticket_container.nth(i)
                     price_text = ticket.locator("div[class*='Price_mainPrice']").inner_text().strip()
