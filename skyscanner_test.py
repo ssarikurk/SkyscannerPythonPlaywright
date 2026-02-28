@@ -748,6 +748,7 @@ def test_skyscanner(browserSkyscanner):
                     # departHour = ticket.locator("div[class*='DepartTime_departTime']").inner_text().strip() if ticket.locator("div[class*='DepartTime_departTime']").count() > 0 else "Bilinmiyor"
                     # arriveHour = ticket.locator("div[class*='ArriveTime_arriveTime']").inner_text().strip() if ticket.locator("div[class*='ArriveTime_arriveTime']").count() > 0 else "Bilinmiyor"
                     arrival_time = page.locator("div[class*='routePartialArrive'] span[class*='label-1']").first.inner_text()
+                    departure_time = page.locator("div[class*='routePartialDepart'] span[class*='label-1']").first.inner_text()
                     # Fiyat Karşılaştırma Mantığı
                     compare_key = f"{fromStr}-{toStr}-{row[2]}-{airline}".lower().strip()
                     old_price_str = old_flights_dict.get(compare_key, "N/A")
