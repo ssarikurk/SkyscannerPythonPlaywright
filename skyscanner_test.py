@@ -774,6 +774,7 @@ def test_skyscanner(browserSkyscanner):
                     print(f"Bilet ayıklanırken hata: {e}")
                     continue
 
+
     # 3. HTML RAPORU OLUŞTURMA
     print(f"\nToplam {len(flightList)} uçuş işlendi. Rapor hazırlanıyor...")
     
