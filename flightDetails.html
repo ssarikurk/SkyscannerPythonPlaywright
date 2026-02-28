@@ -1,9 +1,8 @@
-
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <style>
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <style>
+   body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }
             table { border-collapse: collapse; width: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
             th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
             th { background-color: #0071c2; color: white; }
@@ -21,251 +20,894 @@
                 font-weight: bold;
                 display: inline-block; /* Butonun formunu korur */
             }
-        </style>
-    </head>
-    <body>
-        <h1>Flight Details Report</h1>
-        <p>Oluşturulma Tarihi: 25.02.2026 05:39</p>
-        <p><span style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 3px 8px; border-radius: 3px;">Yeşil: Fiyat Düştü</span> | 
-           <span style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 3px 8px; border-radius: 3px;">Kırmızı: Fiyat Arttı</span></p>
-        <table>
-            <tr>
-                <th>Rota</th>
-                <th>Tarih</th>
-                <th>Havayolu</th>
-                <th>Eski Fiyat</th>
-                <th>Yeni Fiyat</th>
-                <th>Değişim</th>
-                <th>İşlem</th>
-            </tr>
-    
-            <tr style="background-color: white;">
-                <td>DUS ✈ ESB</td>
-                <td>29.05.2026</td>
-                <td>AJet</td>
-                <td>N/A</td>
-                <td class="price-tag">8.518 TL</td>
-                <td>İlk Kayıt</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260529/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #f8d7da;">
-                <td>DUS ✈ ESB</td>
-                <td>29.05.2026</td>
-                <td>SunExpress</td>
-                <td>8.518 TL</td>
-                <td class="price-tag">8.607 TL</td>
-                <td>+89 TL (+%1.0)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260529/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>CGN ✈ ESB</td>
-                <td>29.05.2026</td>
-                <td>AJet</td>
-                <td>N/A</td>
-                <td class="price-tag">5.409 TL</td>
-                <td>İlk Kayıt</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/esb/260529/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>DUS ✈ ESB</td>
-                <td>28.05.2026</td>
-                <td>AJet</td>
-                <td>4.064 TL</td>
-                <td class="price-tag">4.064 TL</td>
-                <td>Değişim Yok</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260528/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #f8d7da;">
-                <td>DUS ✈ ESB</td>
-                <td>28.05.2026</td>
-                <td>AJet</td>
-                <td>4.064 TL</td>
-                <td class="price-tag">4.380 TL</td>
-                <td>+316 TL (+%7.8)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260528/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>FRA ✈ ESB</td>
-                <td>28.05.2026</td>
-                <td>AJet</td>
-                <td>N/A</td>
-                <td class="price-tag">4.388 TL</td>
-                <td>İlk Kayıt</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260528/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>CGN ✈ ESB</td>
-                <td>28.05.2026</td>
-                <td>AJet</td>
-                <td>5.478 TL</td>
-                <td class="price-tag">5.478 TL</td>
-                <td>Değişim Yok</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/esb/260528/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>FRA ✈ ASR</td>
-                <td>28.05.2026</td>
-                <td>AJet</td>
-                <td>N/A</td>
-                <td class="price-tag">5.899 TL</td>
-                <td>İlk Kayıt</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/asr/260528/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>CGN ✈ ASR</td>
-                <td>28.05.2026</td>
-                <td>AJet</td>
-                <td>N/A</td>
-                <td class="price-tag">6.944 TL</td>
-                <td>İlk Kayıt</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/asr/260528/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>DUS ✈ ESB</td>
-                <td>30.05.2026</td>
-                <td>AJet</td>
-                <td>9.264 TL</td>
-                <td class="price-tag">7.486 TL</td>
-                <td>-1.778 TL (%-19.2)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #f8d7da;">
-                <td>DUS ✈ ESB</td>
-                <td>30.05.2026</td>
-                <td>SunExpress</td>
-                <td>7.486 TL</td>
-                <td class="price-tag">9.206 TL</td>
-                <td>+1.720 TL (+%23.0)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>FRA ✈ ESB</td>
-                <td>30.05.2026</td>
-                <td>AJet</td>
-                <td>8.429 TL</td>
-                <td class="price-tag">7.780 TL</td>
-                <td>-649 TL (%-7.7)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>FRA ✈ ESB</td>
-                <td>30.05.2026</td>
-                <td>Pegasus Airlines</td>
-                <td>9.446 TL</td>
-                <td class="price-tag">7.478 TL</td>
-                <td>-1.968 TL (%-20.8)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #f8d7da;">
-                <td>FRA ✈ ESB</td>
-                <td>30.05.2026</td>
-                <td>SunExpress</td>
-                <td>7.486 TL</td>
-                <td class="price-tag">8.466 TL</td>
-                <td>+980 TL (+%13.1)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #f8d7da;">
-                <td>FRA ✈ ESB</td>
-                <td>30.05.2026</td>
-                <td>AJet</td>
-                <td>8.429 TL</td>
-                <td class="price-tag">9.446 TL</td>
-                <td>+1.017 TL (+%12.1)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>DUS ✈ ASR</td>
-                <td>30.05.2026</td>
-                <td>AJet</td>
-                <td>7.786 TL</td>
-                <td class="price-tag">7.692 TL</td>
-                <td>-94 TL (%-1.2)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/asr/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>DUS ✈ ASR</td>
-                <td>30.05.2026</td>
-                <td>Pegasus Airlines</td>
-                <td>9.808 TL</td>
-                <td class="price-tag">9.528 TL</td>
-                <td>-280 TL (%-2.9)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/asr/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>CGN ✈ ASR</td>
-                <td>30.05.2026</td>
-                <td>AJet</td>
-                <td>7.736 TL</td>
-                <td class="price-tag">7.443 TL</td>
-                <td>-293 TL (%-3.8)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/asr/260530/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>DUS ✈ ESB</td>
-                <td>31.05.2026</td>
-                <td>AJet</td>
-                <td>7.486 TL</td>
-                <td class="price-tag">7.437 TL</td>
-                <td>-49 TL (%-0.7)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260531/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: #d4edda;">
-                <td>FRA ✈ ESB</td>
-                <td>31.05.2026</td>
-                <td>AJet</td>
-                <td>7.348 TL</td>
-                <td class="price-tag">7.347 TL</td>
-                <td>-1 TL (%-0.0)</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260531/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>CGN ✈ ESB</td>
-                <td>31.05.2026</td>
-                <td>AJet</td>
-                <td>5.478 TL</td>
-                <td class="price-tag">5.478 TL</td>
-                <td>Değişim Yok</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/esb/260531/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>DUS ✈ ASR</td>
-                <td>31.05.2026</td>
-                <td>AJet</td>
-                <td>N/A</td>
-                <td class="price-tag">6.667 TL</td>
-                <td>İlk Kayıt</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/asr/260531/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
-            <tr style="background-color: white;">
-                <td>CGN ✈ ASR</td>
-                <td>31.05.2026</td>
-                <td>AJet</td>
-                <td>6.328 TL</td>
-                <td class="price-tag">6.328 TL</td>
-                <td>Değişim Yok</td>
-                <td><a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/asr/260531/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
-            </tr>
-        
+  </style>
+ </head>
+ <body>
+  <h1>
+   Flight Details Report
+  </h1>
+  <p>
+   Bulunan Kayıt Sayısı: 30
+  </p>
+  <p>
+   Oluşturulma Tarihi: 27.02.2026 06:31
+  </p>
+  <p>
+   <span style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 3px 8px; border-radius: 3px;">
+    Yeşil: Fiyat Düştü
+   </span>
+   |
+   <span style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 3px 8px; border-radius: 3px;">
+    Kırmızı: Fiyat Arttı
+   </span>
+  </p>
+  <table>
+   <tr>
+    <th>
+     No
+    </th>
+    <th>
+     Rota
+    </th>
+    <th>
+     Tarih
+    </th>
+    <th>
+     Havayolu
+    </th>
+    <th>
+     Eski Fiyat
+    </th>
+    <th>
+     Yeni Fiyat
+    </th>
+    <th>
+     Değişim
+    </th>
+    <th>
+     İşlem
+    </th>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     1
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     29.05.2026
+    </td>
+    <td>
+     SunExpress
+    </td>
+    <td>
+     8.779 TL
+    </td>
+    <td class="price-tag">
+     8.911 TL
+    </td>
+    <td>
+     +132 TL (+%1.5)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260529/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #d4edda;">
+    <td>
+     2
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     29.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     8.913 TL
+    </td>
+    <td class="price-tag">
+     8.774 TL
+    </td>
+    <td>
+     -139 TL (%-1.6)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260529/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #d4edda;">
+    <td>
+     3
+    </td>
+    <td>
+     CGN ✈ ESB
+    </td>
+    <td>
+     29.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     5.435 TL
+    </td>
+    <td class="price-tag">
+     5.425 TL
+    </td>
+    <td>
+     -10 TL (%-0.2)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/esb/260529/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     4
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     28.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     4.149 TL
+    </td>
+    <td class="price-tag">
+     4.149 TL
+    </td>
+    <td>
+     Değişim Yok
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260528/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     5
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     28.05.2026
+    </td>
+    <td>
+     SunExpress
+    </td>
+    <td>
+     5.153 TL
+    </td>
+    <td class="price-tag">
+     5.279 TL
+    </td>
+    <td>
+     +126 TL (+%2.4)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260528/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     6
+    </td>
+    <td>
+     FRA ✈ ESB
+    </td>
+    <td>
+     28.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     5.798 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260528/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     7
+    </td>
+    <td>
+     CGN ✈ ESB
+    </td>
+    <td>
+     28.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     4.379 TL
+    </td>
+    <td class="price-tag">
+     4.380 TL
+    </td>
+    <td>
+     +1 TL (+%0.0)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/esb/260528/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     8
+    </td>
+    <td>
+     FRA ✈ ASR
+    </td>
+    <td>
+     28.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     6.683 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/asr/260528/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     9
+    </td>
+    <td>
+     CGN ✈ ASR
+    </td>
+    <td>
+     28.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     5.729 TL
+    </td>
+    <td class="price-tag">
+     5.786 TL
+    </td>
+    <td>
+     +57 TL (+%1.0)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/asr/260528/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     10
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     SunExpress
+    </td>
+    <td>
+     7.743 TL
+    </td>
+    <td class="price-tag">
+     7.873 TL
+    </td>
+    <td>
+     +130 TL (+%1.7)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     11
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     8.129 TL
+    </td>
+    <td class="price-tag">
+     8.131 TL
+    </td>
+    <td>
+     +2 TL (+%0.0)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #d4edda;">
+    <td>
+     12
+    </td>
+    <td>
+     FRA ✈ ESB
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     8.529 TL
+    </td>
+    <td class="price-tag">
+     7.447 TL
+    </td>
+    <td>
+     -1.082 TL (%-12.7)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #d4edda;">
+    <td>
+     13
+    </td>
+    <td>
+     FRA ✈ ESB
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     8.529 TL
+    </td>
+    <td class="price-tag">
+     7.839 TL
+    </td>
+    <td>
+     -690 TL (%-8.1)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     14
+    </td>
+    <td>
+     FRA ✈ ESB
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     7.810 TL
+    </td>
+    <td class="price-tag">
+     7.873 TL
+    </td>
+    <td>
+     +63 TL (+%0.8)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     15
+    </td>
+    <td>
+     DUS ✈ ASR
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     7.714 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/asr/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     16
+    </td>
+    <td>
+     DUS ✈ ASR
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     7.726 TL
+    </td>
+    <td class="price-tag">
+     9.520 TL
+    </td>
+    <td>
+     +1.794 TL (+%23.2)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/asr/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     17
+    </td>
+    <td>
+     CGN ✈ ASR
+    </td>
+    <td>
+     30.05.2026
+    </td>
+    <td>
+     SunExpress
+    </td>
+    <td>
+     7.449 TL
+    </td>
+    <td class="price-tag">
+     7.462 TL
+    </td>
+    <td>
+     +13 TL (+%0.2)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/asr/260530/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     18
+    </td>
+    <td>
+     DUS ✈ ESB
+    </td>
+    <td>
+     31.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     7.873 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/esb/260531/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     19
+    </td>
+    <td>
+     FRA ✈ ESB
+    </td>
+    <td>
+     31.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     7.444 TL
+    </td>
+    <td class="price-tag">
+     7.447 TL
+    </td>
+    <td>
+     +3 TL (+%0.0)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260531/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #f8d7da;">
+    <td>
+     20
+    </td>
+    <td>
+     CGN ✈ ESB
+    </td>
+    <td>
+     31.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     4.379 TL
+    </td>
+    <td class="price-tag">
+     4.380 TL
+    </td>
+    <td>
+     +1 TL (+%0.0)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/esb/260531/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     21
+    </td>
+    <td>
+     DUS ✈ ASR
+    </td>
+    <td>
+     31.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     7.449 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/dus/asr/260531/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: #d4edda;">
+    <td>
+     22
+    </td>
+    <td>
+     CGN ✈ ASR
+    </td>
+    <td>
+     31.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     6.356 TL
+    </td>
+    <td class="price-tag">
+     6.346 TL
+    </td>
+    <td>
+     -10 TL (%-0.2)
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/cgn/asr/260531/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     23
+    </td>
+    <td>
+     ESB ✈ DUS
+    </td>
+    <td>
+     22.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     4.713 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/dus/260522/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     24
+    </td>
+    <td>
+     ESB ✈ DUS
+    </td>
+    <td>
+     22.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     4.700 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/dus/260522/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     25
+    </td>
+    <td>
+     ESB ✈ CGN
+    </td>
+    <td>
+     22.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     3.883 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/cgn/260522/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     26
+    </td>
+    <td>
+     ESB ✈ DUS
+    </td>
+    <td>
+     23.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     5.502 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/dus/260523/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     27
+    </td>
+    <td>
+     ESB ✈ FRA
+    </td>
+    <td>
+     23.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     6.200 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/fra/260523/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     28
+    </td>
+    <td>
+     ESB ✈ FRA
+    </td>
+    <td>
+     23.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     5.977 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/fra/260523/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     29
+    </td>
+    <td>
+     ESB ✈ FRA
+    </td>
+    <td>
+     23.05.2026
+    </td>
+    <td>
+     Pegasus Airlines
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     7.083 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/fra/260523/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+   <tr style="background-color: white;">
+    <td>
+     30
+    </td>
+    <td>
+     ESB ✈ CGN
+    </td>
+    <td>
+     23.05.2026
+    </td>
+    <td>
+     AJet
+    </td>
+    <td>
+     N/A
+    </td>
+    <td class="price-tag">
+     4.040 TL
+    </td>
+    <td>
+     İlk Kayıt
+    </td>
+    <td>
+     <a href="https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/cgn/260523/?adultsv2=1&amp;cabinclass=economy&amp;childrenv2=&amp;ref=home&amp;rtn=0&amp;preferdirects=false&amp;outboundaltsenabled=false&amp;inboundaltsenabled=false&amp;stops=!oneStop,!twoPlusStops" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+      Bilete Git
+     </a>
+    </td>
+   </tr>
+  </table>
+ </body>
+</html>
