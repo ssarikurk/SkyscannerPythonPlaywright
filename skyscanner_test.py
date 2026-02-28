@@ -845,10 +845,10 @@ def test_skyscanner(browserSkyscanner):
     with open('flightDetails.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
-    send_html_email(
-        message=html_content,
-        subject="Flight Details Report",
-        to_address=os.getenv("TO_MAIL"),
-        from_address=os.getenv("FROM_MAIL")
-    )
+    # send_html_email(
+    #     message=html_content,
+    #     subject="Flight Details Report",
+    #     to_address=os.getenv("TO_MAIL"),
+    #     from_address=os.getenv("FROM_MAIL")
+    # )
     print("\nRapor başarıyla gönderildi.")
