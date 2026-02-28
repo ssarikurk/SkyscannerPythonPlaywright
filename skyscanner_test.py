@@ -511,8 +511,6 @@ def calculate_diff(new_str, old_str):
     else:
         return "Değişim Yok", 0, "white"
 
-
-
 def read_last_sent_flight_email(user_email, app_password):
     try:
         print("\n--- Mail Okuma İşlemi Başladı ---")
@@ -594,7 +592,6 @@ def read_last_sent_flight_email(user_email, app_password):
         print(f"Hata oluştu: {e}")
         return None
 
-
 def parse_flight_table(html_content):
     """Değişen HTML yapısına göre tabloyu hatasız okur."""
     if not html_content:
@@ -659,8 +656,6 @@ def parse_flight_table(html_content):
             continue
             
     return flights
-
-
 
 def parse_flight_table2(html_content):
     """Uçuş tablosundaki her satırı yapılandırılmış veriye dönüştürür"""
