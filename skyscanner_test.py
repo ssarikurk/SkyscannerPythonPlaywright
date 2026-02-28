@@ -803,11 +803,13 @@ def test_skyscanner(browserSkyscanner):
     </head>
     <body>
         <h1>Flight Details Report</h1>
+        <p>Bulunan Kayıt Sayısı: {len(flightList)}</p>
         <p>Oluşturulma Tarihi: {datetime.now().strftime('%d.%m.%Y %H:%M')}</p>
         <p><span style="background-color: #d4edda; border: 1px solid #c3e6cb; padding: 3px 8px; border-radius: 3px;">Yeşil: Fiyat Düştü</span> | 
            <span style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 3px 8px; border-radius: 3px;">Kırmızı: Fiyat Arttı</span></p>
         <table>
             <tr>
+                <th>No</th>
                 <th>Rota</th>
                 <th>Tarih</th>
                 <th>Havayolu</th>
@@ -818,10 +820,11 @@ def test_skyscanner(browserSkyscanner):
             </tr>
     """
 
-    for flight in flightList:
+    for idx, flight in enumerate(flightList, 1):
         # Satır içindeki link rengini de garantiye almak için inline style ekleyelim
         html_content += f"""
             <tr style="background-color: {flight['color']};">
+                <td><strong>{idx}</strong></td>
                 <td>{flight['from'].upper()} ✈ {flight['to'].upper()}</td>
                 <td>{flight['departDate']}</td>
                 <td>{flight['airline']}</td>
@@ -831,6 +834,12 @@ def test_skyscanner(browserSkyscanner):
                 <td><a href="{flight['url']}" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
             </tr>
         """
+
+    html_content += """
+        </table>
+    </body>
+    </html>
+    """
 
     # HTML dosyasını kaydet ve gönder
     with open('flightDetails.html', 'w', encoding='utf-8') as f:
