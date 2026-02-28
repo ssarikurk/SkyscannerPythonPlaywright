@@ -759,7 +759,7 @@ def test_skyscanner(browserSkyscanner):
                         "from": fromStr,
                         "to": toStr,
                         "departDate": row[2],
-                        "departHour": departHour,
+                        "departure_time": departure_time,
                         "arrival_time": arrival_time,
                         "airline": airline,
                         "price": price_text,
