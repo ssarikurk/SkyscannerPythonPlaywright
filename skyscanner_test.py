@@ -758,7 +758,6 @@ def test_skyscanner(browserSkyscanner):
                     flightDict = {
                         "from": fromStr,
                         "to": toStr,
-                        "departDate": row[2],
                         "departure_time": departure_time,
                         "arrival_time": arrival_time,
                         "airline": airline,
