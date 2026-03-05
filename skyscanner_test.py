@@ -593,7 +593,7 @@ def read_last_sent_flight_email(user_email, app_password):
         return None
 
 def parse_flight_table(html_content):
-    """Değişen HTML yapısına göre tabloyu hatasız okur."""
+    """Eski maillerdeki tabloyu başlıkları baz alarak okur ve zamanları da ekler."""
     if not html_content:
         return []
         
@@ -606,55 +606,45 @@ def parse_flight_table(html_content):
         print("HATA: HTML içinde tablo bulunamadı.")
         return []
 
-    # Tüm satırları al
-    rows = table.find_all('tr')
-    
-    for row in rows:
-        # th içeren başlık satırını atla
-        if row.find('th'):
-            continue
-            
+    # Başlıkları oku
+    headers = [th.get_text(strip=True).lower() for th in table.find_all('th')]
+
+    # Satırları işle
+    for row in table.find_all('tr')[1:]:
         cols = row.find_all('td')
-        # Boş satırları veya eksik sütunları atla
-        if len(cols) < 5:
+        if not cols:
             continue
-            
-        try:
-            # 1. Rota (Örn: DUS ✈ ESB)
-            # Rota içindeki img veya emoji karmaşasını temizleyip sadece metni alıyoruz
-            route_text = cols[0].get_text(separator=" ", strip=True)
-            # "DUS ✈ ESB" -> ["DUS", "ESB"]
-            route_parts = route_text.replace('✈', '').split()
-            from_airport = route_parts[0] if len(route_parts) > 0 else "Bilinmiyor"
-            to_airport = route_parts[-1] if len(route_parts) > 1 else "Bilinmiyor"
 
-            # 2. Tarih
-            depart_date = cols[1].get_text(strip=True)
+        flight_info = {}
+        for i, col in enumerate(cols):
+            h = headers[i] if i < len(headers) else f"column_{i}"
+            text = col.get_text(strip=True)
 
-            # 3. Havayolu
-            airline = cols[2].get_text(strip=True)
+            if 'from' in h:
+                flight_info['from'] = text.lower()
+            elif 'to' in h and 'tarih' not in h:
+                flight_info['to'] = text.lower()
+            elif 'tarih' in h or 'depart' in h:
+                flight_info['depart date'] = text
+            elif 'kalkış' in h or 'departure' in h:
+                flight_info['departure_time'] = text
+            elif 'varış' in h or 'arrival' in h:
+                flight_info['arrival_time'] = text
+            elif 'havayolu' in h or 'airline' in h:
+                flight_info['airline'] = text
+            elif 'eski' in h or 'old' in h:
+                flight_info['old_price'] = text
+            elif 'yeni' in h or 'price' in h:
+                flight_info['price'] = text
+            elif 'url' in h:
+                link = col.find('a', href=True)
+                flight_info['url'] = link['href'] if link else None
+            else:
+                # other headers kept as-is
+                flight_info[h] = text
 
-            # 4. Eski Fiyat
-            old_price = cols[3].get_text(strip=True)
+        flights.append(flight_info)
 
-            # 5. Yeni Fiyat
-            new_price = cols[4].get_text(strip=True)
-
-            # Veriyi sözlük yapısına ekle
-            flight_info = {
-                "from": from_airport.lower(),
-                "to": to_airport.lower(),
-                "depart date": depart_date,
-                "airline": airline,
-                "price": new_price, # Karşılaştırma için 'price' anahtarı yeni fiyattır
-                "old_price": old_price
-            }
-            flights.append(flight_info)
-            
-        except Exception as e:
-            print(f"Satır işlenirken hata oluştu: {e}")
-            continue
-            
     return flights
 
 def parse_flight_table2(html_content):
@@ -700,8 +690,16 @@ def test_skyscanner(browserSkyscanner):
         old_email_data = read_last_sent_flight_email(os.getenv("FROM_MAIL"), os.getenv("APP_PASSWORD"))
         if old_email_data and 'flights' in old_email_data:
             for f in old_email_data['flights']:
-                # Karşılaştırma anahtarı: rota-tarih-havayolu
-                key = f"{f.get('from','')}-{f.get('to','')}-{f.get('depart date','')}-{f.get('airline','')}".lower().strip()
+                # Karşılaştırma anahtarı: rota-tarih-saatler-havayolu
+                key_parts = [
+                    f.get('from',''),
+                    f.get('to',''),
+                    f.get('depart date',''),
+                    f.get('departure_time',''),
+                    f.get('arrival_time',''),
+                    f.get('airline','')
+                ]
+                key = "-".join(key_parts).lower().strip()
                 old_flights_dict[key] = f.get('price', 'N/A')
             print(f"Sistemde {len(old_flights_dict)} adet eski uçuş verisi bulundu.")
     except Exception as e:
@@ -745,12 +743,19 @@ def test_skyscanner(browserSkyscanner):
                     airline_locators = page.locator("div[class*='LegDetails_container'] img")
                     airline = airline_locators.nth(i).get_attribute("alt") if airline_locators.nth(i).count() > 0 else "Bilinmiyor"
 
-                    # departHour = ticket.locator("div[class*='DepartTime_departTime']").inner_text().strip() if ticket.locator("div[class*='DepartTime_departTime']").count() > 0 else "Bilinmiyor"
-                    # arriveHour = ticket.locator("div[class*='ArriveTime_arriveTime']").inner_text().strip() if ticket.locator("div[class*='ArriveTime_arriveTime']").count() > 0 else "Bilinmiyor"
-                    arrival_time = page.locator("div[class*='routePartialArrive'] span[class*='label-1']").first.inner_text()
-                    departure_time = page.locator("div[class*='routePartialDepart'] span[class*='label-1']").first.inner_text()
+                    # read departure/arrival times from the route containers
+                    # the first <span> child inside these divs holds the time text
+                    try:
+                        departure_time = ticket.locator("div[class*='RoutePartial_routePartialDepart'] > span").first.inner_text().strip()
+                    except Exception:
+                        departure_time = "Bilinmiyor"
+
+                    try:
+                        arrival_time = ticket.locator("div[class*='RoutePartial_routePartialArrive'] > span").first.inner_text().strip()
+                    except Exception:
+                        arrival_time = "Bilinmiyor"
                     # Fiyat Karşılaştırma Mantığı
-                    compare_key = f"{fromStr}-{toStr}-{row[2]}-{airline}".lower().strip()
+                    compare_key = f"{fromStr}-{toStr}-{row[2]}-{departure_time}-{arrival_time}-{airline}".lower().strip()
                     old_price_str = old_flights_dict.get(compare_key, "N/A")
                     
                     diff_text, diff_val, status_color = calculate_diff(price_text, old_price_str)
@@ -758,6 +763,7 @@ def test_skyscanner(browserSkyscanner):
                     flightDict = {
                         "from": fromStr,
                         "to": toStr,
+                        "departDate": row[2],
                         "departure_time": departure_time,
                         "arrival_time": arrival_time,
                         "airline": airline,
@@ -769,13 +775,14 @@ def test_skyscanner(browserSkyscanner):
                         "url": page.url
                     }
                     flightList.append(flightDict)
-                    print(f"  [{airline}]: {price_text} (Önceki: {old_price_str}) -> {diff_text}")
+                    print(f"  [{airline}]:{departure_time} -> {arrival_time} fiyat:{price_text} (Önceki: {old_price_str}) -> {diff_text}")
                 except Exception as e:
                     print(f"Bilet ayıklanırken hata: {e}")
                     continue
 
 
-    # 3. HTML RAPORU OLUŞTURMA
+
+    # 3. HTML RAPORU OLUŞTURMA ///// yeniden düzenlenmesi lazım kalış ve iniş saatlerini de ekleyelim
     print(f"\nToplam {len(flightList)} uçuş işlendi. Rapor hazırlanıyor...")
     
     html_content = f"""
@@ -814,6 +821,8 @@ def test_skyscanner(browserSkyscanner):
                 <th>No</th>
                 <th>Rota</th>
                 <th>Tarih</th>
+                <th>Kalkış</th>
+                <th>Varış</th>
                 <th>Havayolu</th>
                 <th>Eski Fiyat</th>
                 <th>Yeni Fiyat</th>
@@ -829,6 +838,8 @@ def test_skyscanner(browserSkyscanner):
                 <td><strong>{idx}</strong></td>
                 <td>{flight['from'].upper()} ✈ {flight['to'].upper()}</td>
                 <td>{flight['departDate']}</td>
+                <td>{flight['departure_time']}</td>
+                <td>{flight['arrival_time']}</td>
                 <td>{flight['airline']}</td>
                 <td>{flight['old_price']}</td>
                 <td class="price-tag">{flight['price']}</td>
@@ -836,7 +847,6 @@ def test_skyscanner(browserSkyscanner):
                 <td><a href="{flight['url']}" style="background-color: #0071c2; color: #ffffff; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Bilete Git</a></td>
             </tr>
         """
-
     html_content += """
         </table>
     </body>
@@ -847,10 +857,10 @@ def test_skyscanner(browserSkyscanner):
     with open('flightDetails.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
-    # send_html_email(
-    #     message=html_content,
-    #     subject="Flight Details Report",
-    #     to_address=os.getenv("TO_MAIL"),
-    #     from_address=os.getenv("FROM_MAIL")
-    # )
-    print("\nRapor başarıyla gönderildi.")
+    send_html_email(
+        message=html_content,
+        subject="Flight Details Report",
+        to_address=os.getenv("TO_MAIL"),
+        from_address=os.getenv("FROM_MAIL")
+    )
+    # print("\nRapor başarıyla gönderildi.")
