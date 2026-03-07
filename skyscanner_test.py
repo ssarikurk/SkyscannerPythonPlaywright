@@ -572,11 +572,14 @@ def read_last_sent_flight_email(user_email, app_password):
         print(f"Tarih: {msg.get('Date')}")
         print(f"Bulunan Uçuş Sayısı: {len(flight_data)}")
         
+        # İlk uçuşun yapısını kontrol et (debug)
+        if flight_data:
+            print(f"İlk uçuşun alanları: {list(flight_data[0].keys())}")
+        
         # İlk 2 uçuşu örnek olarak terminale bas
         # for i, f in enumerate(flight_data[:2]):
         for i, f in enumerate(flight_data):
-            print(f"Kayıt {i+1}: {f.get('from')} -> {f.get('to')} | Fiyat: {f.get('price')}")
-        print("---------------------------\n")
+            print(f"Kayıt {i+1}: {f.get('from', 'N/A')} -> {f.get('to', 'N/A')} | Tarih: {f.get('depart date', 'N/A')} | Saatler: {f.get('departure_time', 'N/A')}-{f.get('arrival_time', 'N/A')} | Fiyat: {f.get('price', 'N/A')}")
         
         email_data = {
             "subject": msg.get('Subject'),
@@ -593,7 +596,7 @@ def read_last_sent_flight_email(user_email, app_password):
         return None
 
 def parse_flight_table(html_content):
-    """Eski maillerdeki tabloyu başlıkları baz alarak okur ve zamanları da ekler."""
+    """Eski ve yeni maillerdeki tabloyu okur ve zamanları da ekler."""
     if not html_content:
         return []
         
@@ -622,20 +625,27 @@ def parse_flight_table(html_content):
 
             if 'from' in h:
                 flight_info['from'] = text.lower()
-            elif 'to' in h and 'tarih' not in h:
+            elif h == 'to':  # Tam eşleşme kontrolü
                 flight_info['to'] = text.lower()
-            elif 'tarih' in h or 'depart' in h:
+            elif 'rota' in h:
+                # Eski format: "esb ✈ cdg" şeklinde kombinasyon
+                parts = text.replace('✈', '|').replace('→', '|').split('|')
+                if len(parts) >= 2:
+                    flight_info['from'] = parts[0].strip().lower()
+                    flight_info['to'] = parts[1].strip().lower()
+            elif 'depart date' in h or ('tarih' in h and 'to' not in h):
                 flight_info['depart date'] = text
-            elif 'kalkış' in h or 'departure' in h:
+            elif 'departure' in h or 'kalkış' in h:
                 flight_info['departure_time'] = text
-            elif 'varış' in h or 'arrival' in h:
+            elif 'arrival' in h or 'varış' in h:
                 flight_info['arrival_time'] = text
-            elif 'havayolu' in h or 'airline' in h:
+            elif 'airline' in h or 'havayolu' in h:
                 flight_info['airline'] = text
-            elif 'eski' in h or 'old' in h:
+            elif 'old price' in h or 'eski' in h:
                 flight_info['old_price'] = text
-            elif 'yeni' in h or 'price' in h:
-                flight_info['price'] = text
+            elif 'price' in h or ('yeni' in h and 'fiyat' in h):  # "Price" veya "Yeni Fiyat"
+                if 'old' not in h and 'eski' not in h:
+                    flight_info['price'] = text
             elif 'url' in h:
                 link = col.find('a', href=True)
                 flight_info['url'] = link['href'] if link else None
@@ -701,6 +711,7 @@ def test_skyscanner(browserSkyscanner):
                 ]
                 key = "-".join(key_parts).lower().strip()
                 old_flights_dict[key] = f.get('price', 'N/A')
+                print(f"Debug - Eski uçuş anahtarı: {key} | Fiyat: {f.get('price', 'N/A')}")
             print(f"Sistemde {len(old_flights_dict)} adet eski uçuş verisi bulundu.")
     except Exception as e:
         print(f"Eski mailler okunurken hata alındı (İlk çalışma olabilir): {e}")
@@ -757,6 +768,8 @@ def test_skyscanner(browserSkyscanner):
                     # Fiyat Karşılaştırma Mantığı
                     compare_key = f"{fromStr}-{toStr}-{row[2]}-{departure_time}-{arrival_time}-{airline}".lower().strip()
                     old_price_str = old_flights_dict.get(compare_key, "N/A")
+                    
+                    # print(f"Uçuş: {compare_key} | Eski fiyat: {old_price_str}")
                     
                     diff_text, diff_val, status_color = calculate_diff(price_text, old_price_str)
 
@@ -818,16 +831,16 @@ def test_skyscanner(browserSkyscanner):
            <span style="background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 3px 8px; border-radius: 3px;">Kırmızı: Fiyat Arttı</span></p>
         <table>
             <tr>
-                <th>No</th>
-                <th>Rota</th>
-                <th>Tarih</th>
-                <th>Kalkış</th>
-                <th>Varış</th>
-                <th>Havayolu</th>
-                <th>Eski Fiyat</th>
-                <th>Yeni Fiyat</th>
-                <th>Değişim</th>
-                <th>İşlem</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Depart Date</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
+                <th>Airline</th>
+                <th>Old Price</th>
+                <th>Price</th>
+                <th>Diff</th>
+                <th>URL</th>
             </tr>
     """
 
@@ -835,8 +848,8 @@ def test_skyscanner(browserSkyscanner):
         # Satır içindeki link rengini de garantiye almak için inline style ekleyelim
         html_content += f"""
             <tr style="background-color: {flight['color']};">
-                <td><strong>{idx}</strong></td>
-                <td>{flight['from'].upper()} ✈ {flight['to'].upper()}</td>
+                <td>{flight['from'].upper()}</td>
+                <td>{flight['to'].upper()}</td>
                 <td>{flight['departDate']}</td>
                 <td>{flight['departure_time']}</td>
                 <td>{flight['arrival_time']}</td>
