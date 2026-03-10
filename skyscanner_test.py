@@ -751,18 +751,17 @@ def test_skyscanner(browserSkyscanner):
                     ticket = ticket_container.nth(i)
                     price_text = ticket.locator("div[class*='Price_mainPrice']").inner_text().strip()
                     
-                    airline_locators = page.locator("div[class*='LegDetails_container'] img")
-                    airline = airline_locators.nth(i).get_attribute("alt") if airline_locators.nth(i).count() > 0 else "Bilinmiyor"
+                    airline = ticket.locator("div[class*='LegDetails_container'] img").first.get_attribute("alt").strip() if ticket.locator("div[class*='LegDetails_container'] img").count() > 0 else "Bilinmiyor"
 
                     # read departure/arrival times from the route containers
                     # the first <span> child inside these divs holds the time text
                     try:
-                        departure_time = ticket.locator("div[class*='RoutePartial_routePartialDepart'] > span").first.inner_text().strip()
+                        departure_time = ticket.locator("div[class*='RoutePartial_routePartialDepart'] > span").first.inner_text().strip().replace(" ", "")
                     except Exception:
                         departure_time = "Bilinmiyor"
 
                     try:
-                        arrival_time = ticket.locator("div[class*='RoutePartial_routePartialArrive'] > span").first.inner_text().strip()
+                        arrival_time = ticket.locator("div[class*='RoutePartial_routePartialArrive'] > span").first.inner_text().strip().replace(" ", "")
                     except Exception:
                         arrival_time = "Bilinmiyor"
                     # Fiyat Karşılaştırma Mantığı
