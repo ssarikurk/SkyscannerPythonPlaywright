@@ -733,7 +733,7 @@ def test_skyscanner(browserSkyscanner):
             print(f"\n>>> {fromStr.upper()} - {toStr.upper()} için {departDate} aranıyor...")
 
             url = f"https://www.skyscanner.com.tr/tasima/ucak-bileti/{fromStr}/{toStr}/{departDate}/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops"
-            
+            # print(f"Gidilen URL: {url}")
             page.goto(url)
             page.wait_for_timeout(4000) # Sayfanın yüklenmesi için bekleme
             
