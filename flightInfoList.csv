@@ -1,13 +1,3 @@
 from,to,date,provider
-DUS,ESB,22.05.2026,ucuzabilet
-FRA,ESB,22.05.2026,ucuzabilet
-CGN,ESB,22.05.2026,ucuzabilet
-DUS,ESB,23.05.2026,ucuzabilet
-FRA,ESB,23.05.2026,ucuzabilet
-CGN,ESB,23.05.2026,ucuzabilet
-DUS,ESB,24.05.2026,ucuzabilet
-FRA,ESB,24.05.2026,ucuzabilet
-CGN,ESB,24.05.2026,ucuzabilet
-DUS,ESB,25.05.2026,ucuzabilet
-FRA,ESB,25.05.2026,ucuzabilet
-CGN,ESB,25.05.2026,ucuzabilet
+ESB,DUS,22.05.2026,ucuzabilet
+DUS,ESB,28.05.2026,ucuzabilet
