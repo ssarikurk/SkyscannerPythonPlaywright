@@ -1,3 +1,12 @@
+def normalize_flight_field(val):
+    """arrival_time ve airline gibi alanları normalize eder: boşluk, satırsonu, +1, vb."""
+    if not val:
+        return ""
+    # Tüm whitespace ve satırsonu karakterlerini kaldır
+    v = str(val).replace(" ", "").replace("\n", "").replace("\t", "").lower()
+    # +1 gibi artı işaretlerini de tek satıra indir
+    v = v.replace("+1", "+1")
+    return v
 
 import csv
 import datetime
@@ -636,11 +645,11 @@ def parse_flight_table(html_content):
             elif 'depart date' in h or ('tarih' in h and 'to' not in h):
                 flight_info['depart date'] = text
             elif 'departure' in h or 'kalkış' in h:
-                flight_info['departure_time'] = text
+                flight_info['departure_time'] = normalize_flight_field(text)
             elif 'arrival' in h or 'varış' in h:
-                flight_info['arrival_time'] = text
+                flight_info['arrival_time'] = normalize_flight_field(text)
             elif 'airline' in h or 'havayolu' in h:
-                flight_info['airline'] = text
+                flight_info['airline'] = normalize_flight_field(text)
             elif 'old price' in h or 'eski' in h:
                 flight_info['old_price'] = text
             elif 'price' in h or ('yeni' in h and 'fiyat' in h):  # "Price" veya "Yeni Fiyat"
@@ -705,9 +714,9 @@ def test_skyscanner(browserSkyscanner):
                     f.get('from',''),
                     f.get('to',''),
                     f.get('depart date',''),
-                    f.get('departure_time',''),
-                    f.get('arrival_time',''),
-                    f.get('airline','')
+                    normalize_flight_field(f.get('departure_time','')),
+                    normalize_flight_field(f.get('arrival_time','')),
+                    normalize_flight_field(f.get('airline',''))
                 ]
                 key = "-".join(key_parts).lower().strip()
                 old_flights_dict[key] = f.get('price', 'N/A')
@@ -751,19 +760,22 @@ def test_skyscanner(browserSkyscanner):
                     ticket = ticket_container.nth(i)
                     price_text = ticket.locator("div[class*='Price_mainPrice']").inner_text().strip()
                     
-                    airline = ticket.locator("div[class*='LegDetails_container'] img").first.get_attribute("alt").strip() if ticket.locator("div[class*='LegDetails_container'] img").count() > 0 else "Bilinmiyor"
+                    airline = ticket.locator("div[class*='LegDetails_container'] img").first.get_attribute("alt") if ticket.locator("div[class*='LegDetails_container'] img").count() > 0 else "Bilinmiyor"
+                    airline = normalize_flight_field(airline)
 
                     # read departure/arrival times from the route containers
-                    # the first <span> child inside these divs holds the time text
                     try:
-                        departure_time = ticket.locator("div[class*='RoutePartial_routePartialDepart'] > span").first.inner_text().strip().replace(" ", "")
+                        departure_time = ticket.locator("div[class*='RoutePartial_routePartialDepart'] > span").first.inner_text()
                     except Exception:
                         departure_time = "Bilinmiyor"
+                    departure_time = normalize_flight_field(departure_time)
 
                     try:
-                        arrival_time = ticket.locator("div[class*='RoutePartial_routePartialArrive'] > span").first.inner_text().strip().replace(" ", "")
+                        arrival_time = ticket.locator("div[class*='RoutePartial_routePartialArrive'] > span").first.inner_text()
                     except Exception:
                         arrival_time = "Bilinmiyor"
+                    arrival_time = normalize_flight_field(arrival_time)
+
                     # Fiyat Karşılaştırma Mantığı
                     compare_key = f"{fromStr}-{toStr}-{row[2]}-{departure_time}-{arrival_time}-{airline}".lower().strip()
                     old_price_str = old_flights_dict.get(compare_key, "N/A")
