@@ -780,6 +780,19 @@ def test_skyscanner(browserSkyscanner):
                         arrival_time = "Bilinmiyor"
                     arrival_time = normalize_flight_field(arrival_time)
 
+                    try:
+                        flight_duration = ticket.locator("div[class*='Stops_stopsContainer'] > span").first.inner_text() if ticket.locator("div[class*='Stops_stopsContainer'] > span").count() > 0 else "Bilinmiyor"
+                        flight_duration = normalize_flight_field(flight_duration)
+                    except Exception as e:
+                        print(f"Uçuş süresi okunurken hata: {e}")
+                        flight_duration = "Bilinmiyor"
+
+                    try:
+                        aktarma = ticket.locator("div[class*='Stops_stopsRow'] > span").inner_text() if ticket.locator("div[class*='Stops_stopsRow'] > span").count() > 0 else "Direkt"
+                    except Exception as e:
+                        # print(f"Aktarma bilgisi okunurken hata: {e}")
+                        aktarma = "Yok"
+
                     # Fiyat Karşılaştırma Mantığı
                     compare_key = f"{fromStr}-{toStr}-{row[2]}-{departure_time}-{arrival_time}-{airline}".lower().strip()
                     old_price_str = old_flights_dict.get(compare_key, "N/A")
@@ -794,6 +807,8 @@ def test_skyscanner(browserSkyscanner):
                         "departDate": row[2],
                         "departure_time": departure_time,
                         "arrival_time": arrival_time,
+                        "duration": flight_duration,
+                        "aktarma": aktarma,
                         "airline": airline,
                         "price": price_text,
                         "old_price": old_price_str,
@@ -851,6 +866,8 @@ def test_skyscanner(browserSkyscanner):
                 <th>Depart Date</th>
                 <th>Departure Time</th>
                 <th>Arrival Time</th>
+                <th>Duration</th>
+                <th>Aktarma</th>
                 <th>Airline</th>
                 <th>Old Price</th>
                 <th>Price</th>
@@ -868,6 +885,8 @@ def test_skyscanner(browserSkyscanner):
                 <td>{flight['departDate']}</td>
                 <td>{flight['departure_time']}</td>
                 <td>{flight['arrival_time']}</td>
+                <td>{flight['duration']}</td>
+                <td>{flight['aktarma']}</td>
                 <td>{flight['airline']}</td>
                 <td>{flight['old_price']}</td>
                 <td class="price-tag">{flight['price']}</td>
