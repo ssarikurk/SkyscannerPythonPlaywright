@@ -1,12 +1,3 @@
-def normalize_flight_field(val):
-    """arrival_time ve airline gibi alanları normalize eder: boşluk, satırsonu, +1, vb."""
-    if not val:
-        return ""
-    # Tüm whitespace ve satırsonu karakterlerini kaldır
-    v = str(val).replace(" ", "").replace("\n", "").replace("\t", "").lower()
-    # +1 gibi artı işaretlerini de tek satıra indir
-    v = v.replace("+1", "+1")
-    return v
 
 import csv
 import datetime
@@ -49,6 +40,17 @@ def browserSkyscanner(playwright: Playwright):
     # Test bittiğinde klasörü temizle (Incognito etkisi)
     if os.path.exists(temp_profile):
         shutil.rmtree(temp_profile)
+
+def normalize_flight_field(val):
+    """arrival_time ve airline gibi alanları normalize eder: boşluk, satırsonu, +1, vb."""
+    if not val:
+        return ""
+    # Tüm whitespace ve satırsonu karakterlerini kaldır
+    v = str(val).replace(" ", "").replace("\n", "").replace("\t", "").lower()
+    # +1 gibi artı işaretlerini de tek satıra indir
+    v = v.replace("+1", "+1")
+    return v
+
 
 def convertDateFormat(dateStr):
     # Convert date from DD.MM.YYYY to YYMMDD
