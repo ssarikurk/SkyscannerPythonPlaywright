@@ -750,7 +750,8 @@ def test_skyscanner(browserSkyscanner):
             passCaptcha(url, page.url, page)
 
             # Bilet konteynerlarını bul
-            ticket_container = page.locator("div[class*='EcoTicketWrapper_ecoContainer']")
+            # ticket_container = page.locator("div[class*='EcoTicketWrapper_ecoContainer']")
+            ticket_container = page.locator("div[class*='FlightsTicket_container']")
             ticket_count = ticket_container.count()
             print(f"Bulunan bilet sayısı: {ticket_count}")
 
