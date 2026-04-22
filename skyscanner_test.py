@@ -163,12 +163,14 @@ def test_skyscanner2(browserSkyscanner):
 
             print(f"\n{fromStr} - {toStr} için {departDate} tarihli uçuş aranıyor...")
 
-            url = f"https://www.skyscanner.com.tr/tasima/ucak-bileti/{fromStr}/{toStr}/{departDate}/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops"
+            # url = f"https://www.skyscanner.com.tr/tasima/ucak-bileti/{fromStr}/{toStr}/{departDate}/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops"
+            url = f"https://www.skyscanner.com.tr/tasima/ucak-bileti/{fromStr}/{toStr}/{departDate}/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!twoPlusStops"
+            
             print(f"Gidilen URL: {url}")
             #https://www.skyscanner.com.tr/tasima/ucak-bileti/esb/fran/260320/config/11389-2603201350--32570-0-11616-2603201530?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops
             #https://www.skyscanner.com.tr/tasima/ucak-bileti/fra/esb/260209/?adultsv2=1&cabinclass=economy&childrenv2=&ref=home&rtn=0&preferdirects=false&outboundaltsenabled=false&inboundaltsenabled=false&stops=!oneStop,!twoPlusStops
             page.goto(url)
-            page.wait_for_timeout(3000)  # Arama sonuçlarını görmek için 5 saniye bekle
+            page.wait_for_timeout(3000)  # Arama sonuçlarını görmek için 3 saniye bekle
             checkAndCloseModal(page)
        
             # get page url and print it
@@ -882,10 +884,10 @@ def test_skyscanner(browserSkyscanner):
     with open('flightDetails.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
     
-    send_html_email(
-        message=html_content,
-        subject="Flight Details Report",
-        to_address=os.getenv("TO_MAIL"),
-        from_address=os.getenv("FROM_MAIL")
-    )
+    # send_html_email(
+    #     message=html_content,
+    #     subject="Flight Details Report",
+    #     to_address=os.getenv("TO_MAIL"),
+    #     from_address=os.getenv("FROM_MAIL")
+    # )
     # print("\nRapor başarıyla gönderildi.")
