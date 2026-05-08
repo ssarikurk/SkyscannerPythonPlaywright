@@ -89,7 +89,6 @@ def simulate_human_mouse_movement(page, start_x, start_y, end_x, end_y):
 
 def checkAndCloseModal(page):
     try:
-
         # Sayfanın stabil hale gelmesi için çok kısa bir bekleme
         page.wait_for_timeout(1000)
 
@@ -102,7 +101,6 @@ def checkAndCloseModal(page):
                 btn.click(force=True) # force=True, bazen üstte başka katman varsa tıklamayı zorlar
                 print(f"Modal '{label}' etiketi ile kapatıldı.")
                 return
-
         # 2. Strateji: Görseldeki özel sınıf isimlerini hedefle
         # 'CloseButton_close_button_container' sınıfı görsellerde net şekilde seçili
         specific_selectors = [
