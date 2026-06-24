@@ -1,5 +1,13 @@
 from,to,date,provider
-ESB,MUC,01.09.2026,ucuzabilet
-ESB,MUC,02.09.2026,ucuzabilet
-ESB,MUC,03.09.2026,ucuzabilet
-ESB,MUC,04.09.2026,ucuzabilet
+MUC,ESB,19.07.2026,ucuzabilet
+MUC,ESB,20.07.2027,ucuzabilet
+MUC,ESB,18.07.2028,ucuzabilet
+MUC,ESB,21.07.2029,ucuzabilet
+MUC,ASR,19.07.2026,ucuzabilet
+MUC,ASR,20.07.2027,ucuzabilet
+MUC,ASR,18.07.2028,ucuzabilet
+MUC,ASR,21.07.2029,ucuzabilet
+MUC,NAV,19.07.2026,ucuzabilet
+MUC,NAV,20.07.2027,ucuzabilet
+MUC,NAV,18.07.2028,ucuzabilet
+MUC,NAV,21.07.2029,ucuzabilet
